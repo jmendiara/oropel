@@ -1,39 +1,35 @@
 
-# node-typescript-boilerplate
+# oropel
 
-👩🏻‍💻 Developer Ready: A comprehensive template. Works out of the box for most [Node.js][nodejs] projects.
-
-🏃🏽 Instant Value: All basic tools included and configured:
-
-- [TypeScript][typescript] [4.1][typescript-4-0]
-- [ESLint][eslint] with some initial rules recommendation
-- [Jest][jest] for fast unit testing and code coverage
-- Type definitions for Node.js and Jest
-- [Prettier][prettier] to enforce consistent code style
-- NPM [scripts](#available-scripts) for common operations
-- Simple example of TypeScript code and unit test
-- .editorconfig for consistent file format
-- Example configuration for [GitHub Actions][gh-actions]
-
-🤲 Free as in speech: available under the APLv2 license.
+Minimalistic Reactive MQTT client, using RxJS, with a fluent async api
 
 ## Getting Started
 
-This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
+```sh
+npm i oropel
+```
 
-### Use as a repository template
+### Basic Usage
 
-To start, just click the **[Use template][repo-template-action]** link (or the green button). Now start adding your code in the `src` and unit tests in the `__tests__` directories.
+```js
+import { RxMqttClient } from 'oropel';
+
+const client = new RxMqttClient('mqtt://localhost:1883');
+
+client.topic('test').subscribe((msg) => console.log(msg.toString()));
+await client.publish('test', 'hello world');
+```
+
 
 ## Development setup
 
 To clone the repository use the following commands:
 
 ```sh
-git clone https://github.com/jmendiara/node-typescript-boilerplate && cd node-typescript-boilerplate
+git clone https://github.com/jmendiara/oropel && cd oropel
 ```
 
-Use [VSCode development containers](https://code.visualstudio.com/docs/remote/containers),  directly [docker-compose](https://docs.docker.com/compose/
+Use [VSCode development containers](https://code.visualstudio.com/docs/remote/containers),  directly [docker-compose](https://docs.docker.com/compose/)
 
 ```sh
 # Shell interactive session inside a container

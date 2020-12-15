@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-boilerplate",
-  "version": "0.0.0",
-  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
+  "name": "oropel",
+  "version": "0.1.0",
+  "description": "Minimalistic Reactive MQTT Client",
   "author": "Javier Mendiara Cañardo <jmendiara@gmail.com>",
   "license": "Apache-2.0",
   "scripts": {
@@ -20,12 +20,11 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib",
+    "!lib/examples",
     "src"
   ],
-  "bin": {
-    "boilerplate": "./bin/boilerplate"
-  },
   "devDependencies": {
+    "@types/debug": "^4.1.5",
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.2",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
@@ -39,5 +38,9 @@
     "tsutils": "^3.17.0",
     "typescript": "^4.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "debug": "^4.3.1",
+    "mqtt": "^4.2.6",
+    "rxjs": "^6.6.3"
+  }
 }

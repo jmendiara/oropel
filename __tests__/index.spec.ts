@@ -1,7 +1,8 @@
-import { BOILERPLATE } from '../src/index';
+import { RxMqttClient } from '../src/index';
 
-describe('boilerplate', () => {
-  it('should create de boilerplate', () => {
-    expect(BOILERPLATE).toBe(true);
+describe('RxMqttClient', () => {
+  it('should create de RxMqttClient', () => {
+    const client = new RxMqttClient();
+    expect(client).toBeInstanceOf(RxMqttClient);
   });
 });

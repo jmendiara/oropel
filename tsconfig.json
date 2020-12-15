@@ -17,7 +17,6 @@
     "removeComments": true,
     "rootDir": "./src",
     "sourceMap": true,
-    "strictNullChecks": true,
     "target": "ES2019"
   },
   "include": [
