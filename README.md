@@ -3,6 +3,8 @@
 
 Minimalistic Reactive MQTT client, using RxJS, with a fluent async api
 
+STATUS: Currently in active development
+
 ## Getting Started
 
 ```sh
@@ -19,7 +21,6 @@ const client = new RxMqttClient('mqtt://localhost:1883');
 client.topic('test').subscribe((msg) => console.log(msg.toString()));
 await client.publish('test', 'hello world');
 ```
-
 
 ## Development setup
 
