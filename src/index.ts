@@ -1,18 +1,17 @@
 import { MqttClient, connect, IClientSubscribeOptions, IClientOptions, IClientPublishOptions, IPacket } from 'mqtt';
 
-import { Observable, using, Unsubscribable, fromEvent, Subject, merge } from 'rxjs';
-import { share, finalize, map, shareReplay, filter, switchMapTo, switchMap, take, mapTo } from 'rxjs/operators';
+import { Observable, using, Unsubscribable, fromEvent, Subject } from 'rxjs';
+import { share, finalize, map, shareReplay, filter, switchMapTo, switchMap, take } from 'rxjs/operators';
 import Debug from 'debug';
-
-const DEBUG_TAG = 'oropel';
 
 /**
  * Represents the current connection to the mqtt broker.
  */
 class MqttConnection implements Unsubscribable {
   public client: MqttClient;
+  private connection$ = new Subject<MqttClient>();
 
-  private debug = Debug(`${DEBUG_TAG}:MqttConnection`);
+  private debug = Debug(`oropel:MqttConnection`);
 
   constructor(protected url?: string | unknown, protected opts?: IClientOptions) {}
 
@@ -20,17 +19,16 @@ class MqttConnection implements Unsubscribable {
     this.client = connect(this.url, this.opts);
     this.debug('connect', this.client.options.clientId);
 
-    const connect$ = fromEvent(this.client, 'connect');
-    const error$ = fromEvent(this.client, 'error');
+    this.client.on('connect', () => this.connection$.next(this.client));
+    this.client.on('error', (err: Error) => this.connection$.error(err));
     this.client.on('end', () => {
       this.debug('closed', this.client?.options.clientId);
       this.client.removeAllListeners();
       this.client = null;
+      this.connection$.complete();
     });
 
-    const connection$ = merge<MqttClient>(connect$.pipe(mapTo(this.client)), error$);
-
-    return connection$;
+    return this.connection$.asObservable();
   }
 
   unsubscribe(): void {
@@ -44,7 +42,7 @@ class MqttConnection implements Unsubscribable {
  * Represents a subscription to a Topic
  */
 class MqttSubscription implements Unsubscribable {
-  private debug = Debug(`${DEBUG_TAG}:MqttSubscription`);
+  private debug = Debug(`oropel:MqttSubscription`);
   private subscription$ = new Subject<void>();
   constructor(
     private client: MqttClient,
@@ -83,7 +81,7 @@ export class RxMqttClient {
 
   private client$: Observable<MqttClient>;
   private messages$: Observable<OnMessageEvent>;
-  private debug = Debug(`${DEBUG_TAG}:RxMqttClient`);
+  private debug = Debug(`oropel:RxMqttClient`);
 
   constructor(protected url?: string | unknown, protected opts?: IClientOptions) {
     const connection$ = using(
