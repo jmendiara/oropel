@@ -119,7 +119,7 @@ export class RxMqttClient {
    * The first one subscribing to the resulting observable executes a mqtt subscribe.
    * The last one unsubscribing this filter executes a mqtt unsubscribe.
    */
-  public topic(filterString: string, opts: IClientSubscribeOptions): Observable<Buffer> {
+  public topic(filterString: string, opts?: IClientSubscribeOptions): Observable<Buffer> {
     // Use a small cache to allow reutilization of MqttSubscription when calling several times topic fn
     // ex: the following code shares a subscription
     // const aTopic = mqtt.topic('a/topic');
