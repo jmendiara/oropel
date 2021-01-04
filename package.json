@@ -1,6 +1,6 @@
 {
   "name": "oropel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Minimalistic Reactive MQTT Client",
   "author": "Javier Mendiara Cañardo <jmendiara@gmail.com>",
   "license": "Apache-2.0",
